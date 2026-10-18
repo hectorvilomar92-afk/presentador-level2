@@ -27,6 +27,19 @@ st.set_page_config(
     layout="wide",
 )
 
+import streamlit as st
+
+# Ocultar solo el pie de página, barra inferior y avatares flotantes
+hide_footer_and_avatar = """
+    <style>
+    footer {visibility: hidden;}
+    div[data-testid="stStatusWidget"] {visibility: hidden;}
+    .stAppViewerFooter {display: none !important;}
+    [data-testid="stAppViewerFooter"] {display: none !important;}
+    </style>
+"""
+st.markdown(hide_footer_and_avatar, unsafe_allow_html=True)
+
 AZUL = RGBColor(10, 42, 94)
 AZUL_OSCURO = RGBColor(7, 31, 71)
 AZUL_CLARO = RGBColor(191, 211, 242)
