@@ -27,23 +27,29 @@ st.set_page_config(
     layout="wide",
 )
 
-# Ocultar de forma precisa los elementos flotantes inferiores (avatar y notificaciones de Streamlit)
-hide_footer_and_avatar = """
+# Ocultar footer, barra inferior flotante (badge / avatar / ícono rojo)
+hide_streamlit_style = """
     <style>
-    /* Ocultar el pie de página general */
+    /* Ocultar el pie de página por defecto */
     footer {visibility: hidden !important; display: none !important;}
     
-    /* Ocultar el widget flotante inferior derecho (avatar y estado) */
+    /* Ocultar widget de estado y notificaciones */
     div[data-testid="stStatusWidget"] {visibility: hidden !important; display: none !important;}
     
-    /* Ocultar contenedores flotantes que se posicionan en la esquina inferior */
-    div[class*="viewerBadge"] {visibility: hidden !important; display: none !important;}
+    /* Ocultar la barra y botones flotantes inferiores (viewer badge / community button) */
+    .stAppViewerFooter {display: none !important; visibility: hidden !important;}
+    [data-testid="stAppViewerFooter"] {display: none !important; visibility: hidden !important;}
     
-    /* Ocultar el contenedor de notificaciones flotantes de Streamlit Cloud */
-    iframe[src*="streamlit.app"] {display: none !important;}
+    /* Ocultar contenedor de insignias / avatar flotante */
+    div[class*="viewerBadge"] {display: none !important; visibility: hidden !important;}
+    div[class*="stAppToolbar"] {display: none !important; visibility: hidden !important;}
+    
+    /* Ocultar cualquier enlace/botón flotante en las esquinas inferiores */
+    a[href*="streamlit.io"] {display: none !important; visibility: hidden !important;}
+    a[href*="github.com"] {display: none !important; visibility: hidden !important;}
     </style>
 """
-st.markdown(hide_footer_and_avatar, unsafe_allow_html=True)
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 AZUL = RGBColor(10, 42, 94)
 AZUL_OSCURO = RGBColor(7, 31, 71)
