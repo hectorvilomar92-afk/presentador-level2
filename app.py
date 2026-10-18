@@ -1,5 +1,5 @@
 import base64
-from html import unescape
+from html import escape, unescape
 from io import BytesIO
 import json
 from pathlib import Path
@@ -26,30 +26,6 @@ st.set_page_config(
     page_icon="🎓",
     layout="wide",
 )
-
-# Ocultar footer, barra inferior flotante (badge / avatar / ícono rojo)
-hide_streamlit_style = """
-    <style>
-    /* Ocultar el pie de página por defecto */
-    footer {visibility: hidden !important; display: none !important;}
-    
-    /* Ocultar widget de estado y notificaciones */
-    div[data-testid="stStatusWidget"] {visibility: hidden !important; display: none !important;}
-    
-    /* Ocultar la barra y botones flotantes inferiores (viewer badge / community button) */
-    .stAppViewerFooter {display: none !important; visibility: hidden !important;}
-    [data-testid="stAppViewerFooter"] {display: none !important; visibility: hidden !important;}
-    
-    /* Ocultar contenedor de insignias / avatar flotante */
-    div[class*="viewerBadge"] {display: none !important; visibility: hidden !important;}
-    div[class*="stAppToolbar"] {display: none !important; visibility: hidden !important;}
-    
-    /* Ocultar cualquier enlace/botón flotante en las esquinas inferiores */
-    a[href*="streamlit.io"] {display: none !important; visibility: hidden !important;}
-    a[href*="github.com"] {display: none !important; visibility: hidden !important;}
-    </style>
-"""
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 AZUL = RGBColor(10, 42, 94)
 AZUL_OSCURO = RGBColor(7, 31, 71)
@@ -1074,6 +1050,7 @@ st.markdown(
     <style>
     .stApp { background: #EEF3FA; color: #0A2A5E; }
     [data-testid="stHeader"] { background: rgba(238, 243, 250, .92); }
+    [data-testid="stFooter"], footer { display: none !important; }
     .plani-banner {
         background: linear-gradient(120deg, #071F47 0%, #0A2A5E 48%, #1A5BB5 100%);
         color: white; padding: 1.5rem 2rem; border-radius: 20px;
@@ -1082,6 +1059,22 @@ st.markdown(
     }
     .plani-banner h1 { color: white; margin: 0; font-size: 1.8rem; }
     .plani-banner p { color: #BFD3F2; margin: .45rem 0 0; }
+    .plani-user {
+        margin: .25rem 0 1rem; padding: 1rem .75rem; text-align: center;
+        border: 1px solid rgba(10, 42, 94, .12); border-radius: 14px;
+        background: white;
+    }
+    .plani-user-avatar {
+        width: 52px; height: 52px; margin: 0 auto .55rem; border-radius: 50%;
+        display: grid; place-items: center; background: #D4AF37; color: #071F47;
+        font-size: 1.25rem; font-weight: 800;
+    }
+    .plani-user-name { color: #0A2A5E; font-weight: 700; overflow-wrap: anywhere; }
+    .plani-user-status { margin-top: .25rem; color: #16834A; font-size: .85rem; }
+    .plani-user-status::before {
+        content: ""; display: inline-block; width: 8px; height: 8px; margin-right: .4rem;
+        border-radius: 50%; background: #20A464; vertical-align: middle;
+    }
     [data-testid="stForm"] {
         background: white; padding: 1.5rem 1.7rem; border-radius: 18px;
         border: 1px solid #D9E4F5; box-shadow: 0 8px 24px rgba(10, 42, 94, .1);
@@ -1161,7 +1154,18 @@ mostrar_avisos_activos(
 )
 
 with st.sidebar:
-    st.markdown(f"### {perfil.get('nombre') or perfil.get('email')}")
+    nombre_usuario = str(perfil.get("nombre") or perfil.get("email") or "Usuario")
+    iniciales = "".join(
+        parte[0] for parte in nombre_usuario.strip().split()[:2] if parte
+    ).upper() or "U"
+    st.markdown(
+        "<div class='plani-user'>"
+        f"<div class='plani-user-avatar'>{escape(iniciales)}</div>"
+        f"<div class='plani-user-name'>{escape(nombre_usuario)}</div>"
+        "<div class='plani-user-status'>En línea</div>"
+        "</div>",
+        unsafe_allow_html=True,
+    )
     st.caption("Administrador" if es_admin else "Usuario")
     if not perfil.get("vence"):
         st.success("Acceso sin vencimiento")
