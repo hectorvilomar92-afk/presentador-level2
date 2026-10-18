@@ -27,15 +27,21 @@ st.set_page_config(
     layout="wide",
 )
 
-import streamlit as st
-
-# Ocultar solo el pie de página, barra inferior y avatares flotantes
+# Ocultar footer y elementos flotantes inferiores de forma definitiva
 hide_footer_and_avatar = """
     <style>
-    footer {visibility: hidden;}
-    div[data-testid="stStatusWidget"] {visibility: hidden;}
-    .stAppViewerFooter {display: none !important;}
-    [data-testid="stAppViewerFooter"] {display: none !important;}
+    /* Ocultar el pie de página general */
+    footer {display: none !important; visibility: hidden !important;}
+    
+    /* Ocultar el widget de estado flotante (esquina inferior derecha) */
+    div[data-testid="stStatusWidget"] {display: none !important; visibility: hidden !important;}
+    
+    /* Ocultar cualquier botón flotante o menú de Deploy/Hosting en la esquina */
+    .stApp > div:last-child {display: none !important;}
+    div.reportview-container > div:nth-child(2) {visibility: hidden;}
+    
+    /* Ocultar el enlace de "Made with Streamlit" y avatares */
+    #MainMenu + footer, .viewerBadge_container__1QSob {display: none !important;}
     </style>
 """
 st.markdown(hide_footer_and_avatar, unsafe_allow_html=True)
