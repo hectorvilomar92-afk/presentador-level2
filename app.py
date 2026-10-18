@@ -1383,8 +1383,8 @@ elif seccion == "Administrar usuarios":
             st.error(str(error))
 else:
     st.markdown(
-        "Escribe un tema y crea un PowerPoint con información de Wikipedia, "
-        "imágenes de Wikimedia Commons, referencias y enlaces de YouTube."
+        "Escribe un tema y crea un PowerPoint con información, "
+        "imágenes, referencias y enlaces de YouTube."
     )
     if vencido:
         st.warning(
