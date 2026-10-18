@@ -1050,7 +1050,10 @@ st.markdown(
     <style>
     .stApp { background: #EEF3FA; color: #0A2A5E; }
     [data-testid="stHeader"] { background: rgba(238, 243, 250, .92); }
-    [data-testid="stFooter"], footer { display: none !important; }
+    [data-testid="stFooter"], footer,
+    [data-testid="stDeployButton"], [data-testid="stAppDeployButton"],
+    [data-testid="stToolbar"], [data-testid="stStatusWidget"],
+    [data-testid="stDecoration"] { display: none !important; }
     .plani-banner {
         background: linear-gradient(120deg, #071F47 0%, #0A2A5E 48%, #1A5BB5 100%);
         color: white; padding: 1.5rem 2rem; border-radius: 20px;
